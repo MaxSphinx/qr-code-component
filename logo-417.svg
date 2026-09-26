@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="logoBg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#141414"/>
+      <stop offset="100%" stop-color="#080808"/>
+    </radialGradient>
+
+    <!-- Neon Lime Radial Glow -->
+    <radialGradient id="limeAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#CCFF00" stop-opacity="0.8"/>
+      <stop offset="55%" stop-color="#CCFF00" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#CCFF00" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Laser Dot Glow Filter -->
+    <filter id="laserGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Ambient Glow Filter -->
+    <filter id="ambientGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22" result="glow"/>
+    </filter>
+
+    <!-- Cyber Stencil Dual Cut Mask -->
+    <mask id="dualStencilMask">
+      <rect width="512" height="512" fill="#FFFFFF"/>
+      <!-- Top stencil slice -->
+      <rect x="90" y="214" width="332" height="7.5" fill="#000000"/>
+      <!-- Bottom stencil slice -->
+      <rect x="90" y="262" width="332" height="7.5" fill="#000000"/>
+    </mask>
+  </defs>
+
+  <!-- Base Rounded Container (Squircle) -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#logoBg)" stroke="#1F1F1F" stroke-width="3"/>
+  <rect x="22" y="22" width="468" height="468" rx="102" fill="none" stroke="#2B2B2B" stroke-width="1.2" opacity="0.35"/>
+
+  <!-- Precision Crosshair & Tech Ticks -->
+  <g stroke="#2C2C2C" stroke-width="2" stroke-linecap="round">
+    <line x1="256" y1="30" x2="256" y2="44"/>
+    <line x1="256" y1="468" x2="256" y2="482"/>
+    <line x1="30" y1="256" x2="44" y2="256"/>
+    <line x1="468" y1="256" x2="482" y2="256"/>
+
+    <!-- Corner HUD Brackets -->
+    <path d="M 58 88 L 58 58 L 88 58" fill="none"/>
+    <path d="M 454 88 L 454 58 L 424 58" fill="none"/>
+    <path d="M 58 424 L 58 454 L 88 454" fill="none"/>
+    <path d="M 454 424 L 454 454 L 424 454" fill="none"/>
+  </g>
+
+  <!-- Status Chip (Top Left) -->
+  <g transform="translate(62, 70)">
+    <text font-family="'SF Mono', 'Roboto Mono', Menlo, monospace" font-size="9" font-weight="700" fill="#52525B" letter-spacing="2">PROTOCOL // 417</text>
+  </g>
+
+  <!-- Miniature Laser Status Indicator (Top Right) -->
+  <g transform="translate(422, 74)">
+    <circle cx="0" cy="0" r="16" fill="#CCFF00" opacity="0.22" filter="url(#laserGlow)"/>
+    <circle cx="0" cy="0" r="8" fill="#CCFF00" opacity="0.5"/>
+    <circle cx="0" cy="0" r="4.5" fill="#CCFF00"/>
+    <circle cx="0" cy="0" r="2" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Neon Lime Ambient Underglow -->
+  <ellipse cx="256" cy="336" rx="145" ry="30" fill="url(#limeAura)" filter="url(#ambientGlow)"/>
+
+  <!-- Monolithic "417" in Font-Mono Cyber Stencil -->
+  <g mask="url(#dualStencilMask)">
+    <!-- Main Stencil Numerals -->
+    <text x="256" y="294"
+          font-family="'SF Mono', 'SFMono-Regular', 'Roboto Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Monaco, Consolas, monospace"
+          font-size="164"
+          font-weight="900"
+          letter-spacing="6"
+          text-anchor="middle"
+          fill="#FFFFFF">
+      417
+    </text>
+  </g>
+
+  <!-- Technical Laser Accent Line beneath numbers -->
+  <g>
+    <line x1="136" y1="324" x2="376" y2="324" stroke="#CCFF00" stroke-width="3" opacity="0.85" filter="url(#laserGlow)"/>
+    <line x1="136" y1="324" x2="376" y2="324" stroke="#CCFF00" stroke-width="2"/>
+    <polygon points="256,319 261,324 256,329 251,324" fill="#CCFF00"/>
+  </g>
+
+  <!-- Subtitle Tag -->
+  <text x="256" y="366"
+        font-family="'SF Mono', 'Roboto Mono', Menlo, monospace"
+        font-size="12"
+        font-weight="700"
+        fill="#71717A"
+        letter-spacing="6"
+        text-anchor="middle">
+    BIOMECHANICAL PROTOCOL
+  </text>
+  
+  <text x="256" y="386"
+        font-family="'SF Mono', 'Roboto Mono', Menlo, monospace"
+        font-size="9"
+        font-weight="700"
+        fill="#3F3F46"
+        letter-spacing="4"
+        text-anchor="middle">
+    DIV: 01 // SYNDICATE
+  </text>
+</svg>

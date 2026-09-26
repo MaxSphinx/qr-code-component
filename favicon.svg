@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="favBg" cx="50%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#151515"/>
+      <stop offset="100%" stop-color="#080808"/>
+    </radialGradient>
+    
+    <!-- Neon Lime Underglow -->
+    <radialGradient id="favLimeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#CCFF00" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#CCFF00" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#CCFF00" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Laser Dot Glow Filter -->
+    <filter id="favLaserGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Ambient Glow Filter -->
+    <filter id="favNeonBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22" result="glow"/>
+    </filter>
+
+    <!-- Stencil Cut Mask -->
+    <mask id="favStencilMask">
+      <rect width="512" height="512" fill="#FFFFFF"/>
+      <rect x="80" y="234" width="352" height="9" fill="#000000"/>
+    </mask>
+  </defs>
+
+  <!-- Container (Squircle with 112px radius) -->
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#favBg)" stroke="#1F1F1F" stroke-width="4"/>
+  <rect x="22" y="22" width="468" height="468" rx="106" fill="none" stroke="#2A2A2A" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Corner Brackets -->
+  <g stroke="#303030" stroke-width="2.5" stroke-linecap="round">
+    <path d="M 64 96 L 64 64 L 96 64" fill="none"/>
+    <path d="M 448 96 L 448 64 L 416 64" fill="none"/>
+    <path d="M 64 416 L 64 448 L 96 448" fill="none"/>
+    <path d="M 448 416 L 448 448 L 416 448" fill="none"/>
+  </g>
+
+  <!-- Neon Lime Underglow -->
+  <ellipse cx="256" cy="340" rx="150" ry="32" fill="url(#favLimeGlow)" filter="url(#favNeonBlur)"/>
+
+  <!-- Monolithic "417" -->
+  <g mask="url(#favStencilMask)">
+    <text x="256" y="306"
+          font-family="'SF Mono', 'SFMono-Regular', 'Roboto Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Monaco, Consolas, monospace"
+          font-size="182"
+          font-weight="900"
+          letter-spacing="5"
+          text-anchor="middle"
+          fill="#FFFFFF">
+      417
+    </text>
+  </g>
+
+  <!-- Lime Laser Accent Underline -->
+  <g>
+    <line x1="130" y1="336" x2="382" y2="336" stroke="#CCFF00" stroke-width="3.5" opacity="0.85" filter="url(#favLaserGlow)"/>
+    <line x1="130" y1="336" x2="382" y2="336" stroke="#CCFF00" stroke-width="2"/>
+    <polygon points="256,330 262,336 256,342 250,336" fill="#CCFF00"/>
+  </g>
+
+  <!-- Miniature Laser Status Indicator (Top Right) -->
+  <g transform="translate(416, 96)">
+    <circle cx="0" cy="0" r="16" fill="#CCFF00" opacity="0.2" filter="url(#favLaserGlow)"/>
+    <circle cx="0" cy="0" r="8" fill="#CCFF00" opacity="0.5"/>
+    <circle cx="0" cy="0" r="4.5" fill="#CCFF00"/>
+    <circle cx="0" cy="0" r="2" fill="#FFFFFF"/>
+  </g>
+</svg>
