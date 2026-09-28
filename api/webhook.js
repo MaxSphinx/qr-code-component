@@ -35,15 +35,37 @@ export default async function handler(req, res) {
     }
 
     const fromUser = msg.from || {};
-    const username = fromUser.username ? `@${fromUser.username}` : fromUser.first_name || 'Атлет';
+    const usernameClean = (fromUser.username || '').replace(/^@/, '').toLowerCase().trim();
+    const firstNameLower = (fromUser.first_name || '').toLowerCase().trim();
+
     const isCreator =
-      fromUser.username === 'a7rcana' ||
-      fromUser.username === 'x417e' ||
-      fromUser.username === 'maxim_fit' ||
-      fromUser.username === 'oqpie' ||
-      fromUser.id === 8180640504 ||
-      fromUser.id === 1007600503 ||
-      fromUser.id === 99999999;
+      usernameClean === 'a7rcana' ||
+      usernameClean === 'x417e' ||
+      usernameClean === 'maxim_fit' ||
+      usernameClean === 'oqpie' ||
+      fromUser.id === 8180640504;
+
+    const isArtemiy =
+      usernameClean === 'yarvexor' ||
+      firstNameLower === 'артемий' ||
+      firstNameLower === 'artemiy' ||
+      fromUser.id === 1007600503;
+
+    // Pin the WebApp Menu Button for this user so it's always available
+    try {
+      await fetch(`${API_URL}/setChatMenuButton`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          menu_button: {
+            type: 'web_app',
+            text: 'PROJECT 417',
+            web_app: { url: WEB_APP_URL },
+          },
+        }),
+      });
+    } catch {}
 
     let replyText = '';
     if (isCreator) {
@@ -51,7 +73,13 @@ export default async function handler(req, res) {
         `Приветствую, Создатель (<b>${fromUser.first_name || 'Максим'}</b>).\n` +
         `Статус доступа: <b>SUPER ADMIN • ID #417-MAX</b>\n\n` +
         `Система развернута в автономном облаке (24/7). Ноутбук полностью освобожден от нагрузок.\n` +
-        `Готова к тренировочным циклам, биомеханическому учету и протоколам восстановления.`;
+        `Готова к тренировочным циклам, биомеханическому учету и управлению атлетами.`;
+    } else if (isArtemiy) {
+      replyText = `⚡ <b>PROJECT 417 // ДОСТУП АВТОРИЗОВАН</b>\n\n` +
+        `Приветствуем в закрытом дивизионе, <b>Артемий (@yarvexor)</b>.\n` +
+        `Статус доступа: <b>РЕЗИДЕНТ СИНДИКАТА • ID #417-ART</b>\n\n` +
+        `Персональный скоростно-силовой протокол и антропометрия инициализированы.\n` +
+        `Нажмите кнопку ниже для запуска биомеханического терминала:`;
     } else {
       replyText = `⚡ <b>PROJECT 417 // BIOMECHANICAL PERFORMANCE PROTOCOL</b>\n\n` +
         `Приветствуем в закрытом дивизионе атлетической подготовки, <b>${fromUser.first_name || 'Атлет'}</b>.\n\n` +
