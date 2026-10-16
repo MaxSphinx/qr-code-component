@@ -30,7 +30,14 @@ export default async function handler(req, res) {
     }
 
     const text = (msg.text || '').trim();
-    if (!text.startsWith('/start') && !text.startsWith('/open') && !text.startsWith('/app') && !text.startsWith('/status')) {
+    if (
+      !text.startsWith('/start') &&
+      !text.startsWith('/open') &&
+      !text.startsWith('/app') &&
+      !text.startsWith('/status') &&
+      !text.startsWith('/briefing') &&
+      !text.startsWith('/today')
+    ) {
       return res.status(200).json({ ok: true, note: 'Command ignored' });
     }
 
@@ -68,7 +75,18 @@ export default async function handler(req, res) {
     } catch {}
 
     let replyText = '';
-    if (isCreator) {
+    const isBriefing = text.startsWith('/briefing') || text.startsWith('/today');
+
+    if (isBriefing) {
+      const todayRu = new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
+      replyText = `⚡ <b>PROJECT 417 // ЕЖЕДНЕВНЫЙ БРИФИНГ</b>\n` +
+        `📅 <i>${todayRu}</i>\n\n` +
+        `👤 Атлет: <b>${fromUser.first_name || 'Атлет'}</b>\n` +
+        `🎯 Авторегуляция: <b>Double Progression активна (+2.5 кг к закрытым сетам)</b>\n` +
+        `💧 Норма гидратации: <b>2500 мл (баланс электролитов)</b>\n` +
+        `⚡ Готовность ЦНС: <b>Оптимальный Sweet Spot (ACWR 0.8–1.3)</b>\n\n` +
+        `Нажмите кнопку ниже для старта тренировки:`;
+    } else if (isCreator) {
       replyText = `⚡ <b>PROJECT 417 // СИСТЕМА АКТИВНА</b>\n\n` +
         `Приветствую, Создатель (<b>${fromUser.first_name || 'Максим'}</b>).\n` +
         `Статус доступа: <b>SUPER ADMIN • ID #417-MAX</b>\n\n` +
